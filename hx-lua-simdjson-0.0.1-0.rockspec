@@ -1,5 +1,5 @@
 package="hx-lua-simdjson"
-version="scm-0"
+version="0.0.1"
 source = {
    url = "git://github.com/jdonaldson/hx-lua-simdjson",
    tag = "0.0.1"

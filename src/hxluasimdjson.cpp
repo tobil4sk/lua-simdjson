@@ -2,9 +2,9 @@
 #include <lauxlib.h>
 
 #include "simdjson.h"
-#include "luasimdjson.h"
+#include "hxluasimdjson.h"
 
-#define LUA_SIMDJSON_NAME       "simdjson"
+#define LUA_SIMDJSON_NAME       "hxsimdjson"
 #define LUA_SIMDJSON_VERSION    "0.0"
 
 using namespace simdjson;
@@ -39,11 +39,10 @@ void convert_element_to_table(lua_State *L, dom::element element) {
           int count = 0;
           lua_newtable(L);
           lua_getglobal(L, "_hx_array_mt");
-          lua_setmetatable(L, 2);
+          lua_setmetatable(L, -2);
           for (dom::element child : dom::array(element)) {
             lua_pushinteger(L, count);
             convert_element_to_table(L, child);
-
             lua_rawset(L, -3);
             count = count + 1;
           }
@@ -55,6 +54,7 @@ void convert_element_to_table(lua_State *L, dom::element element) {
 
     case dom::element_type::OBJECT:
       lua_newtable(L);
+      /* set values */
       for (dom::key_value_pair field : dom::object(element)) {
 
         std::string_view view(field.key);
@@ -63,7 +63,17 @@ void convert_element_to_table(lua_State *L, dom::element element) {
         convert_element_to_table(L, field.value);
         lua_settable(L, -3);
       }
+      lua_newtable(L);
+      /* set field existence */
+      for (dom::key_value_pair field : dom::object(element)) {
+        std::string_view view(field.key);
+        lua_pushlstring(L, view.data(), view.size());
+        lua_pushboolean(L, true);
+        lua_settable(L, -3);
+      }
+      lua_setfield(L, -2, "__fields__");
       break;
+
 
     case dom::element_type::INT64:
       lua_pushinteger(L, int64_t(element));
@@ -89,7 +99,7 @@ void convert_element_to_table(lua_State *L, dom::element element) {
       break;
 
     case dom::element_type::NULL_VALUE:
-      lua_pushlightuserdata(L, NULL);
+      lua_pushnil(L);
       break;
   }
 }
@@ -228,7 +238,7 @@ static const struct luaL_Reg arraylib_m [] = {
     {NULL, NULL}
 };
 
-int luaopen_simdjson (lua_State *L) {
+int luaopen_hxsimdjson (lua_State *L) {
     luaL_newmetatable(L, LUA_MYOBJECT);
      lua_pushvalue(L, -1); /* duplicates the metatable */
     lua_setfield(L, -2, "__index");
@@ -237,7 +247,7 @@ int luaopen_simdjson (lua_State *L) {
     // luaL_newlib(L, luasimdjson);
 
     lua_newtable(L);
-    luaL_setfuncs (L, luasimdjson, 0);
+    luaL_setfuncs (L, hxluasimdjson, 0);
 
     lua_pushlightuserdata(L, NULL);
     lua_setfield(L, -2, "null");

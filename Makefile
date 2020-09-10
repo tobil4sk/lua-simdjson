@@ -1,16 +1,16 @@
-SRC = src/luasimdjson.cpp src/simdjson.cpp
+SRC = src/hxluasimdjson.cpp src/simdjson.cpp
 INCLUDE = -I$(LUA_INCDIR)
 LIBS_PATH = -L$(LUA_LIBDIR)
 LIBS = -lpthread
 FLAGS = -std=c++11 -Wall $(LIBFLAG) $(CFLAGS)
 
-all: simdjson.so
+all: hxsimdjson.so
 
-simdjson.so:
+hxsimdjson.so:
 	$(CXX) $(SRC) $(FLAGS) $(INCLUDE) $(LIBS_PATH) $(LIBS) -o $@
 
 clean:
 	rm *.so
 
-install: simdjson.so
-	cp simdjson.so $(INST_LIBDIR)
+install: hxsimdjson.so
+	cp hxsimdjson.so $(INST_LIBDIR)

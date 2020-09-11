@@ -2,7 +2,7 @@ package="hx-lua-simdjson"
 version="0.0.1-0"
 source = {
    url = "git://github.com/jdonaldson/hx-lua-simdjson",
-   tag = "0.0.1"
+   tag = "0.0.2"
 }
 description = {
    summary = "This is a simple Haxe-specific Lua binding for simdjson",

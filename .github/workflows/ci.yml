@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         lua: [lua=5.1, lua=5.2, lua=5.3, lua=5.4, luajit=2.0, luajit=2.1]
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v3
@@ -49,6 +49,13 @@ jobs:
         run: |
           pip install hererocks
           hererocks lua_install -r^ --${{ matrix.lua }}
+      - name: test luasystem
+        run: |
+          git clone https://github.com/lunarmodules/luasystem --branch vtperror
+          .\lua_install\bin\activate
+          cd luasystem
+          luarocks build
+
       - name: Build lua-simdjson
         run: |
           .\lua_install\bin\activate

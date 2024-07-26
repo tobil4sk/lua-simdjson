@@ -51,7 +51,7 @@ jobs:
           hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@tmp2 --${{ matrix.lua }} --verbose
 
           .\lua_install\bin\activate
-          luarocks
+          luarocks --verbose
       - name: Build lua-simdjson
         run: |
           .\lua_install\bin\activate

@@ -48,7 +48,7 @@ jobs:
       - name: Install Lua (${{ matrix.lua }})
         run: |
           pip install hererocks
-          hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@tmp --${{ matrix.lua }} --verbose
+          hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@tmp2 --${{ matrix.lua }} --verbose
 
           .\lua_install\bin\activate
           luarocks

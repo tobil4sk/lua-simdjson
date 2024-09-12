@@ -1,4 +1,4 @@
-SRC = src/luasimdjson.cpp src/simdjson.cpp
+SRC = src/hxluasimdjson.cpp src/simdjson.cpp
 INCLUDE = -I$(LUA_INCDIR)
 LIBS = -lpthread
 FLAGS = -std=c++11 -Wall $(LIBFLAG) $(CFLAGS)
@@ -20,7 +20,7 @@ else
 	endif
 endif
 
-TARGET = simdjson.$(LIBEXT)
+TARGET = hxsimdjson.$(LIBEXT)
 
 all: $(TARGET)
 

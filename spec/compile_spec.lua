@@ -1,4 +1,4 @@
-local simdjson = require("simdjson")
+local simdjson = require("hxsimdjson")
 local cjson = require("cjson")
 
 local function loadFile(textFile)

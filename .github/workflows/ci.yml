@@ -57,10 +57,16 @@ jobs:
           hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@46903c2 --${{ matrix.lua }} --target ${{ matrix.target }}
       - name: Build lua-simdjson
         run: |
+          Set-PSDebug -Trace 1
+          $PSNativeCommandUseErrorActionPreference = $true
+          $ErrorActionPreference = 'Stop'
           .\lua_install\bin\activate
           luarocks make
       - name: Run tests
         run: |
+          Set-PSDebug -Trace 1
+          $PSNativeCommandUseErrorActionPreference = $true
+          $ErrorActionPreference = 'Stop'
           .\lua_install\bin\activate
           luarocks install lua-cjson2
           luarocks install busted

@@ -27,7 +27,7 @@ jobs:
       - name: Install Lua (${{ matrix.lua }})
         run: |
           pip install hererocks
-          hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@46903c2 --${{ matrix.lua }}
+          hererocks lua_install -rhttps://github.com/tobil4sk/luarocks@vendor-lua-compat53 --${{ matrix.lua }}
         env:
           MACOSX_DEPLOYMENT_TARGET: 11.0
       - name: Build lua-simdjson
